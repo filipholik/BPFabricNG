@@ -20,7 +20,7 @@ class SingleSwitchTopo(Topo):
         self.addLink(aggSwitch1, coreSwitch)
         self.addLink(aggSwitch2, coreSwitch)
 
-        for h in xrange(4):
+        for h in range(4):
             host = self.addHost('h%d' % (h + 1),
                                 ip = "10.0.%d.10/24" % h,
                                 mac = '00:04:00:00:00:%02x' %h)
