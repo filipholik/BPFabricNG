@@ -1,3 +1,5 @@
+syntax = "proto2";
+
 message PacketIn {
     required bytes data = 1;
 }
