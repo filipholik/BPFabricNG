@@ -1,7 +1,7 @@
 from twisted.internet import protocol
 
-from packets import *
-from events import _handlers
+from .packets import *
+from .events import _handlers
 
 FLOOD      = 0xfffffffd
 CONTROLLER = 0xfffffffe
