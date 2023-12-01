@@ -78,14 +78,14 @@ class SwitchCLI(cmd.Cmd):
     def do_table(self, line):
         args = line.split()
         if len(args) == 0:
-            print 'Missing table name'
+            print ('Missing table name')
             return
 
         SwitchTableCli(self.connection, args[0]).onecmd(' '.join(args[1:]))
 
     def do_install(self, path):
         if not os.path.isfile(path):
-            print 'Invalid file path'
+            print ('Invalid file path')
             return
 
         with open(path, 'rb') as f:
@@ -116,7 +116,7 @@ class MainCLI(cmd.Cmd):
                 if dpid in self.application.connections:
                     SwitchCLI(self.application.connections[dpid]).onecmd(' '.join(args[1:]))
                 else:
-                    print 'Switch with dpid {} is not connected.'.format(dpid)
+                    print ('Switch with dpid {} is not connected.'.format(dpid))
             except ValueError:
                 cmd.Cmd.default(self, line)
 
@@ -139,7 +139,7 @@ class eBPFCLIApplication(eBPFCoreApplication):
         try:
             MainCLI(self).cmdloop()
         except KeyboardInterrupt:
-            print "\nGot keyboard interrupt. Exiting..."
+            print ("\nGot keyboard interrupt. Exiting...")
         finally:
             reactor.callFromThread(reactor.stop)
 
@@ -176,12 +176,12 @@ class eBPFCLIApplication(eBPFCoreApplication):
 
     @set_event_handler(Header.NOTIFY)
     def notify_event(self, connection, pkt):
-        print '\n[{}] Received notify event {}, data length {}'.format(connection.dpid, pkt.id, len(pkt.data))
-        print pkt.data.encode('hex')
+        print ('\n[{}] Received notify event {}, data length {}'.format(connection.dpid, pkt.id, len(pkt.data)))
+        print (pkt.data.encode('hex'))
 
     @set_event_handler(Header.PACKET_IN)
     def packet_in(self, connection, pkt):
-	print '\n[{}] Received packet in {}'.format(connection.dpid, pkt.data.encode('hex'))
+        print ('\n[{}] Received packet in {}'.format(connection.dpid, pkt.data.encode('hex')))
 
 
 if __name__ == '__main__':
