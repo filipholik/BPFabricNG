@@ -4,9 +4,9 @@
 A programmable dataplane using the eBPF instruction set.
 
 ## NG
-Updated to work with clang-11 and Python3.
+Updated to work with clang-15 and Python3.  
 
-Required tools: mininet gcc-multilib protobuf-compiler protobuf-c-compiler libprotobuf-c-dev libprotobuf-dev clang-11 git python3-protobuf python3-twisted
+Required tools: mininet gcc-multilib protobuf-compiler protobuf-c-compiler libprotobuf-c-dev libprotobuf-dev clang-15 git python3-protobuf python3-twisted
 
 ## Dependencies
 Tested and working with
