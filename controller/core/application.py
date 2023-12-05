@@ -13,7 +13,12 @@ class eBPFCoreApplication(object):
 
     @set_event_handler('disconnect')
     def connection_closed(self, connection, reason):
-        del self.connections[connection.dpid]
+        if hasattr(connection, "dpid"):
+            del self.connections[connection.dpid]
+        else:
+            print('Unable to close the connection')
+        
+        
 
     @set_event_handler(Header.HELLO)
     def hello_request(self, connection, pkt):
