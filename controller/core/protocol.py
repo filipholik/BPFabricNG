@@ -34,7 +34,8 @@ class eBPFProtocol(protocol.Protocol):
         Header.NOTIFY: Notify,
     }
 
-    _message_object_to_type = { v: k for k,v in _message_type_to_object.items() }
+    _message_object_to_type = { v: k for k,v in list(_message_type_to_object.items()) } # Python3 fix
+    # _message_object_to_type = { v: k for k,v in _message_type_to_object.items() } # Old version
 
     HEADER_LENGTH = 10
 
@@ -84,8 +85,9 @@ class eBPFProtocol(protocol.Protocol):
             handler(self.application, self, *args)
 
     def dataReceived(self, data):
-        # append the newly received data to the buffer
-        self.buffer += data
+        # append the newly received data to the buffer 
+        self.buffer = data;  # Python3 fix       
+        # self.buffer += data # Python2
 
         # Iterate over the packets received, call the associated handlers
         for header, packet in self._read_packets():
