@@ -158,7 +158,8 @@ class eBPFCLIApplication(eBPFCoreApplication):
 
                 for i in range(pkt.n_items):
                     key, value = struct.unpack_from(fmt, pkt.items, i * item_size)
-                    entries.append((key.encode('hex'), value.encode('hex')))
+                    entries.append(key + value) #Python3  
+                    #entries.append((key.encode('hex'), value.encode('hex'))) #Python2
 
             elif pkt.entry.table_type == TableDefinition.ARRAY:
                 item_size = pkt.entry.value_size
