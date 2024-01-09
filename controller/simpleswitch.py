@@ -21,16 +21,25 @@ class SimpleSwitchApplication(eBPFCoreApplication):
         in_port, = struct.unpack_from(metadatahdr_fmt, pkt.data, 0)
         eth_dst, eth_src, eth_type = struct.unpack_from(ethhdr_fmt, pkt.data, struct.calcsize(metadatahdr_fmt))
 
-        print (in_port, eth_dst.encode('hex'), eth_src.encode('hex'), hex(eth_type) )
+        print (in_port, eth_dst, eth_src, hex(eth_type) ) #Python3
+        #print (in_port, eth_dst.encode('hex'), eth_src.encode('hex'), hex(eth_type) ) #Python2
+
+        #eth_src = eth_src.encode(encoding='utf-8')
 
         self.mac_to_port.setdefault(connection.dpid, {})
 
-        if ord(eth_src[0]) & 1 == 0:
+        #print(eth_src[0])
+        #print(eth_src)
+        
+        #if ord(eth_src[0]) & 1 == 0: #Python2
+        if eth_src[0] & 1 == 0: #Python3
             self.mac_to_port[connection.dpid][eth_src] = in_port
-            print ('Inserting entry in switch {}  {} {}'.format(connection.dpid, eth_src.encode('hex'), in_port) )
+            print ('Inserting entry in switch {}  {} {}'.format(connection.dpid, eth_src, in_port) ) #Python3
+            #print ('Inserting entry in switch {}  {} {}'.format(connection.dpid, eth_src.encode('hex'), in_port) ) #Python2
             connection.send(TableEntryInsertRequest(table_name="inports", key=eth_src, value=struct.pack('I', in_port)))
 
-        if ord(eth_dst[0]) & 1 == 1:
+        #if ord(eth_dst[0]) & 1 == 1: #Python2
+        if eth_dst[0] & 1 == 1: #Python3
             out_port = FLOOD
         else:
             out_port = self.mac_to_port[connection.dpid].get(eth_dst, FLOOD)
