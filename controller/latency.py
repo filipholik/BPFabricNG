@@ -9,7 +9,7 @@ def int2ip(addr):
     return socket.inet_ntoa(struct.pack("!I", addr))
 
 
-out = file('latency.dat', 'w')
+#out = file('latency.dat', 'w') Python2
 
 class SimpleSwitchApplication(eBPFCoreApplication):
     @set_event_handler(Header.HELLO)
@@ -32,7 +32,9 @@ class SimpleSwitchApplication(eBPFCoreApplication):
 #        print syn_sec, syn_nsec, synack_sec, synack_nsec, ack_sec, ack_nsec
 #        print int2ip(src), srcport, int2ip(dst), dstport, (ack-synack)/10**3, (synack-syn)/10**6, (ack-syn)/10**6
 #        print
-        out.write('{} {} {} {} {}\n'.format(srcport, dstport, (ack-synack)/10**6, (synack-syn)/10**6, (ack-syn)/10**6))
+
+        #out.write('{} {} {} {} {}\n'.format(srcport, dstport, (ack-synack)/10**6, (synack-syn)/10**6, (ack-syn)/10**6)) #Python2
+        open('latency.dat', 'w').write('{} {} {} {} {}\n'.format(srcport, dstport, (ack-synack)/10**6, (synack-syn)/10**6, (ack-syn)/10**6)) #Python3
 
 
 if __name__ == '__main__':
